@@ -1,65 +1,96 @@
 <!DOCTYPE html>
+
 <head>
 
 </head>
+
 <body>
     <script>
+        let computerSelection;
+        let playerSelection;
+        let computerScore = 0;
+        let playerScore = 0;
+        let winner;
 
-    /// Computer randomly selects its move
-    function computerPlay () {
-        let number = Math.floor(Math.random() * Math.floor(3));
-        switch (number) {
-            case 0:
-                return "ROCK";
-            case 1:
-                return "PAPER";
-            case 2:
-                return "SCISSORS";
-        }
-    }
 
-    /// One Round of GamePlay
-    function playRound (playerSelection, computerSelection) {
-        playerSelection = playerSelection.toUpperCase();
-        if (computerSelection == playerSelection) {
-            return playerSelection + " and " + computerSelection + " are the same.  Tie Game!";
+        /// Computer randomly selects its move
+        function computerPlay() {
+            let number = Math.floor(Math.random() * (3));
+           if (number < 1) {
+               return "ROCK";
+           } else if (number > 1){
+               return "SCISSORS";
+           } else {
+               return "PAPER";
+           }
         }
-        else if (computerSelection == "ROCK") {
-            switch (playerSelection) {
-                case "PAPER": 
-                    return "Paper beats Rock, You Win!";
-                    break;
-                case "SCISSORS": 
-                    return "Rock beats Scissors, You Lose!";
-                    break;
-            }
-        }
-        else if (computerSelection == "PAPER") {
-            switch (playerSelection) {
-                case "ROCK": 
-                    return "Paper beats Rock, You Lose!";
-                    break;
-                case "SCISSORS": 
-                    return "Scissors beat Paper, You Win!";
-                    break;
-            }
-        }
-        else if (computerSelection == "SCISSORS") {
-            switch (playerSelection) {
-                case "ROCK ": 
-                    return "Rock beats Scissors, You Win!";
-                    break;
-                case "PAPER": 
-                    return "Scissors beats Paper, You Lose!";
-                    break;
-            }
-        }
-    }
-    /// Testing the function in the console
 
-const playerSelection = 'rock';
-const computerSelection = computerPlay();
-console.log(playRound(playerSelection, computerSelection));
+        /// One Round of GamePlay
+        function playRound(playerSelection, computerSelection, computerScore, playerScore) {
+            computerSelection = computerPlay();
+            playerSelection = prompt("Choose Rock, Paper, or Scissors?");
+            playerSelection = playerSelection.toUpperCase();
+            if (computerSelection == playerSelection) {
+                return playerSelection + " and " + computerSelection + " are the same.  Tie Game!";
+            }
+            else if (computerSelection == "ROCK") {
+                switch (playerSelection) {
+                    case "PAPER":
+                        return "Paper beats Rock, You Win!";
+                        break;
+                        playerScore++;
+                    case "SCISSORS":
+                        return "Rock beats Scissors, You Lose!";
+                        computerScore++;
+                        break;
+                }
+            }
+            else if (computerSelection == "PAPER") {
+                switch (playerSelection) {
+                    case "ROCK":
+                        return "Paper beats Rock, You Lose!";
+                        computerScore++;
+                        break;
+                    case "SCISSORS":
+                        return "Scissors beat Paper, You Win!";
+                        playerScore++;
+                        break;
+                }
+            }
+            else if (computerSelection == "SCISSORS") {
+                switch (playerSelection) {
+                    case "ROCK ":
+                        return "Rock beats Scissors, You Win!";
+                        playerScore++;
+                        break;
+                    case "PAPER":
+                        return "Scissors beats Paper, You Lose!";
+                        computerScore++;
+                        break;
+                }
+            }
+       
+        }
+
+
+        function game() {
+
+            playRound(playerSelection, computerSelection, computerScore, playerScore);
+            playRound(playerSelection, computerSelection, computerScore, playerScore);
+            playRound(playerSelection, computerSelection, computerScore, playerScore);
+            playRound(playerSelection, computerSelection, computerScore, playerScore);
+            playRound(playerSelection, computerSelection, computerScore, playerScore);
+            
+            if (computerScore > playerScore) {
+                console.log("Computer Wins!");
+            }
+            else if (playerScore < computerScore) {
+                console.log("Player Wins!");
+            }
+
+        }
+
+        console.log(game());
 
     </script>
 
